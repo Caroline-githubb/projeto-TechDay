@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>TechDay</title>
+    <script src="env.js"></script>
+    <script src="cadastroPrograma.js">
+
+    </script>
+</head>
+
+<body style="margin: 0;">
+    <div
+        style="width: 100%;height: 100px;/*! border-top-style: solid; */border-width: revert-layer;background-image: radial-gradient(circle at 6.78% 46.22%, #eee7ec 0, #ff4ccf 12.5%, #ff44db 25%, #ff3ee7 37.5%, #f23cf2 50%, #d53efd 62.5%, #b245ff 75%, #854dff 87.5%, #3956ff 100%);">
+        <img src="./img/logo.png" style="  margin-top: auto;max-width: 100%;max-height: 100%;" width="200" height="100">
+        <span onclick="home()" style="vertical-align: middle;/*! padding-top: 36px; */padding-bottom: 75px;font-weight: bold;color: white;"> HOME&nbsp&nbsp&nbsp</span>
+        <span onclick="clickProgramas()" style="vertical-align: middle;/*! padding-top: 36px; */padding-bottom: 75px;font-weight: bold;color: white;"> PROGRAMAS&nbsp&nbsp&nbsp</span>
+        <span onclick="clickAdmin()" style="vertical-align: middle;/*! padding-top: 36px; */padding-bottom: 75px;font-weight: bold;color: white;"> ADMINISTRADOR</span>
+   
+    </div>
+    
+    <div style="width: min-content;position: fixed;margin-block: 50px;">
+        <h2>Cadastrar Programa</h2>        
+        <label>*Nome: <input type="text" id="txtNome" name="Nome" size="45" /></label> <br> <br>
+        <label>*Tema: <input type="text" id="txtTema" name="Tema" size="45" /></label> <br> <br>
+        <label>*Site: <input type="text" id="txtSite" name="Site" size="45" /></label>
+        <label>*Descricao: <textarea id="txtDescricao" name="Descricao" rows="8" style="width: 400px;" ></textarea></label> <br> <br>
+
+        <h4 onclick="clickSalvar()">Salvar</h4>
+    </div>
+    
+</body>
+
+
+
+</html>
