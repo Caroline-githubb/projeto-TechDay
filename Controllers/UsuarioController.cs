@@ -48,7 +48,7 @@ public class UsuarioController : ControllerBase
 
     
     [HttpPost]
-    [Authorize]
+    [Authorize] //somente um usuário especifico pode cadastrar outro usuário
     [Route("CadastrarUsuario")]
     public void CadastrarUsuario(Usuario usuario)
     {

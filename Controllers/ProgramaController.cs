@@ -95,6 +95,7 @@ public class ProgramaController : ControllerBase
                 }
             }
             
+            //configuração do envio de e-mail
             MailMessage message = new MailMessage();
             SmtpClient smtp = new SmtpClient();
 

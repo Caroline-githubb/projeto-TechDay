@@ -40,10 +40,17 @@ function clickSalvar()
         xhttp.open("POST", url, false);
         xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.setRequestHeader("Authorization", "Bearer " + token);
+
         xhttp.send(data);//A execução do script pára aqui até a requisição retornar do servidor
 
-        alert("Programa cadastrado com sucesso.")
-        
-        window.location.href = "file:///home/carol/Visual%20Studio/SeriesFavoritas/SeriesFavoritas2/home.html";
+        if (xhttp.status == 200) {
+            alert("Programa cadastrado com sucesso.")
+
+            return window.location.href = baseApiUrl + "/listaProgramas.html";
+        } else if (xhttp.status == 401) {
+            return window.location.href = baseApiUrl + "/administrador.html";
+        } else {
+            alert("Erro ao salvar programa.")
+        }
     }
 }

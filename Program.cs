@@ -50,7 +50,7 @@ if (app.Environment.IsDevelopment())
 
 
 // app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseStaticFiles();// Para adicionar os arquivos estáticos de html
 
 app.UseAuthentication();
 app.UseAuthorization();
