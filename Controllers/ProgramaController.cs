@@ -1,11 +1,9 @@
-using System.Data.SQLite;
 using System.Net;
 using System.Net.Mail;
 using CarrefourApi.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using CarrefourApi.Repository;
-using CarrefourApi.Repository.SqliteRepository;
 
 namespace CarrefourApi.Controllers;
 

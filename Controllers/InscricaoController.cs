@@ -1,6 +1,5 @@
 using CarrefourApi.Model;
 using CarrefourApi.Repository;
-using CarrefourApi.Repository.SqliteRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarrefourApi.Controllers;

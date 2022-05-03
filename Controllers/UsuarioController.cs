@@ -1,7 +1,5 @@
-using System.Data.SQLite;
 using CarrefourApi.Model;
 using CarrefourApi.Repository;
-using CarrefourApi.Repository.SqliteRepository;
 using CarrefourApi.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
