@@ -12,19 +12,19 @@ namespace CarrefourApi.Controllers;
 [Route("[controller]")]
 public class UsuarioController : ControllerBase
 {
-
+    private IUsuarioRepository repository;
     private TokenService tokenService;
-
-    public UsuarioController(TokenService tokenService)
+    public UsuarioController(IUsuarioRepository repository, TokenService tokenService)
     {
+        this.repository = repository;
         this.tokenService = tokenService;
     }
-
+      
     [HttpGet]
     [Route("VerificarUsuario")]
     public ActionResult<string> VerificarUsuario(string email, string senha)
     {
-        IUsuarioRepository repository = new SqliteUsuarioRepository();
+        repository.VerificarUsuario(email, senha);
 
         if (repository.VerificarUsuario(email, senha))
         {
@@ -34,14 +34,11 @@ public class UsuarioController : ControllerBase
         return Unauthorized("usuário e senha incorretos");
     }
 
-
     [HttpPost]
     [Authorize]
     [Route("CadastrarUsuario")]
     public void CadastrarUsuario(Usuario usuario)
     {
-        IUsuarioRepository repository = new SqliteUsuarioRepository();
-
         repository.CadastrarUsuario(usuario);
     }
 

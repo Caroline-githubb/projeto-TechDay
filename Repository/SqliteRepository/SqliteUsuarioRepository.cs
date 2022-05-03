@@ -42,6 +42,8 @@ namespace CarrefourApi.Repository.SqliteRepository
                 {
                     return reader.Read();
                 }
+
+                
             }
         }
     }

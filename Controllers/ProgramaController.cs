@@ -15,15 +15,21 @@ namespace CarrefourApi.Controllers;
 [Route("[controller]")]
 public class ProgramaController : ControllerBase
 {
-
+    private IProgramaRepository repository;
+    private IInscricaoRepository repositoryEmail;
+    
+    public ProgramaController(IProgramaRepository repository, IInscricaoRepository repositoryEmail)
+    {
+        this.repository = repository;    
+        this.repositoryEmail = repositoryEmail;    
+    }
+    
     [HttpGet]
     [AllowAnonymous]
     [Route("ListarProgramas")]
     public List<Programa> ListarProgramas()
-    {
-        IProgramaRepository repository = new SqliteProgramaRepository();
+    {        
         return repository.ListarProgramas();
-
     }
 
     [HttpPost]
@@ -45,26 +51,24 @@ public class ProgramaController : ControllerBase
             return BadRequest("O campo site é obrigatorio");
 
         }
-
-        IProgramaRepository repository = new SqliteProgramaRepository();
+        
         repository.CadastrarPrograma(programa);
+        
+        var emails = repositoryEmail.ListarEmails();
 
-        IInscricaoRepository emailRepository = new SqliteInscricaoRepository();
-        var emails = emailRepository.ListarEmails();
+        //Config. envio de e-mail
+        MailMessage message = new MailMessage(); //cria uma msg
+        SmtpClient smtp = new SmtpClient(); //envia msg
 
-
-        MailMessage message = new MailMessage();
-        SmtpClient smtp = new SmtpClient();
-
-        message.From = new MailAddress("ingrid.caroline.teste@gmail.com", "PROGRAMA TECH DAY CARREFOUR");
+        message.From = new MailAddress("ingrid.caroline.teste@gmail.com", "PROGRAMA TECH DAY CARREFOUR"); 
 
         foreach (var email in emails)
         {
             message.To.Add(new MailAddress(email.Email));
         }
-        message.Subject = "NOVIDADE NO MUNDO DA TI PARA AS MULHERES";
+        message.Subject = "NOVIDADE NO MUNDO DA TI PARA AS MULHERES"; //Assunto
         message.IsBodyHtml = false;
-        message.Body = "Entre no site ou consulte a API para saber mais infomações do programa " + programa.Nome;
+        message.Body = "Programa " + programa.Nome + ": " + programa.Tema +"\n" + "\n" + "Descrição: " + programa.Descricao + "\n Site: " + programa.Site;
 
         smtp.Port = 587;
         smtp.Host = "smtp.gmail.com";
@@ -97,7 +101,6 @@ public class ProgramaController : ControllerBase
             return BadRequest("O campo site é obrigatorio");
         }
 
-        IProgramaRepository repository = new SqliteProgramaRepository();
         repository.AlterarPrograma(programa);
 
         return Ok();
@@ -107,7 +110,6 @@ public class ProgramaController : ControllerBase
     [Route("deletarPrograma")]
     public void DeletarPrograma(int codigo)
     {
-        IProgramaRepository repository = new SqliteProgramaRepository();
         repository.DeletarPrograma(codigo);
     }
 }

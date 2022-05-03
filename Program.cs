@@ -40,8 +40,9 @@ builder.Services.AddAuthentication(x =>
     });
 
 builder.Services.AddSingleton<TokenService, TokenService>();
-
 builder.Services.AddSingleton<IInscricaoRepository, SqliteInscricaoRepository>();
+builder.Services.AddSingleton<IUsuarioRepository, SqliteUsuarioRepository>();
+builder.Services.AddSingleton<IProgramaRepository, SqliteProgramaRepository>();
 
 var app = builder.Build();
 
