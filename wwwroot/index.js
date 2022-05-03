@@ -22,7 +22,16 @@ function clickCadastrar(){
         xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.send(data);//A execução do script pára aqui até a requisição retornar do servidor
 
-        alert("Cadastrado com sucesso.")
+        if (xhttp.status == 500){
+            var teste = xhttp.responseText;
+            localStorage.setItem("Teste", teste)
+            alert("Cadastro já existe, digite outro e-mail")
+        }
+
+        else{
+            alert("Cadastrado com sucesso.")
+        }
+       
         
     }
 }
