@@ -6,7 +6,6 @@ namespace CarrefourApi.Repository.SqliteRepository
     public class SqliteInscricaoRepository : IInscricaoRepository
     {
 
-
         public void InserirInscricao(Inscricao inscricao)
         {
             using (var connection = new SQLiteConnection("Data Source=bancocarrefour.db"))
@@ -16,9 +15,9 @@ namespace CarrefourApi.Repository.SqliteRepository
                 var command = connection.CreateCommand();
                 command.CommandText =
                 @$"
-                INSERT INTO Inscricao (Nome, Email)
-                VALUES('{inscricao.Nome}', '{inscricao.Email}')
-            ";
+                    INSERT INTO Inscricao (Nome, Email)
+                    VALUES('{inscricao.Nome}', '{inscricao.Email}')
+                ";
                 // command.Parameters.AddWithValue("$id", id);
 
                 command.ExecuteNonQuery();
@@ -34,9 +33,9 @@ namespace CarrefourApi.Repository.SqliteRepository
                 var command = connection.CreateCommand();
                 command.CommandText =
                 @$"
-               SELECT Email
-               FROM Inscricao
-            ";
+                    SELECT Email
+                    FROM Inscricao
+                ";
                 // command.Parameters.AddWithValue("$id", id);            
                 command.ExecuteNonQuery();
 

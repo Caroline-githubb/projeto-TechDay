@@ -9,6 +9,13 @@ namespace CarrefourApi.Controllers;
 [Route("[controller]")]
 public class InscricaoController : ControllerBase
 {
+    private IInscricaoRepository repository;
+
+    public InscricaoController(IInscricaoRepository repository)
+    {
+        this.repository = repository;
+    }
+
     [HttpPost]
     [Route("InscricaoEmail")]
     public ActionResult InscricaoEmail(Inscricao inscricao)
@@ -22,7 +29,6 @@ public class InscricaoController : ControllerBase
             return BadRequest("O campo e-mail é obrigatorio");
         }
 
-        IInscricaoRepository repository = new SqliteInscricaoRepository();
         repository.InserirInscricao(inscricao);
 
         return Ok();

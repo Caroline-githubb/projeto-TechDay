@@ -1,4 +1,6 @@
 using System.Text;
+using CarrefourApi.Repository;
+using CarrefourApi.Repository.SqliteRepository;
 using CarrefourApi.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -38,6 +40,8 @@ builder.Services.AddAuthentication(x =>
     });
 
 builder.Services.AddSingleton<TokenService, TokenService>();
+
+builder.Services.AddSingleton<IInscricaoRepository, SqliteInscricaoRepository>();
 
 var app = builder.Build();
 
