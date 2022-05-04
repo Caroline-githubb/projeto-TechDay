@@ -4,6 +4,7 @@ using CarrefourApi.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using CarrefourApi.Repository;
+using CarrefourApi.Service;
 
 namespace CarrefourApi.Controllers;
 
@@ -15,18 +16,21 @@ public class ProgramaController : ControllerBase
 {
     private IProgramaRepository repository;
     private IInscricaoRepository repositoryEmail;
-    
-    public ProgramaController(IProgramaRepository repository, IInscricaoRepository repositoryEmail)
+
+    private EmailService emailService;
+
+    public ProgramaController(IProgramaRepository repository, IInscricaoRepository repositoryEmail, EmailService emailService)
     {
-        this.repository = repository;    
-        this.repositoryEmail = repositoryEmail;    
+        this.repository = repository;
+        this.repositoryEmail = repositoryEmail;
+        this.emailService = emailService;
     }
-    
+
     [HttpGet]
     [AllowAnonymous]
     [Route("ListarProgramas")]
     public List<Programa> ListarProgramas()
-    {        
+    {
         return repository.ListarProgramas();
     }
 
@@ -47,37 +51,20 @@ public class ProgramaController : ControllerBase
         if (string.IsNullOrWhiteSpace(programa.Site))
         {
             return BadRequest("O campo site é obrigatorio");
-
         }
-        
+
         repository.CadastrarPrograma(programa);
-        
-        var emails = repositoryEmail.ListarEmails();
 
-        //Config. envio de e-mail
-        MailMessage message = new MailMessage(); //cria uma msg
-        SmtpClient smtp = new SmtpClient(); //envia msg
-
-        message.From = new MailAddress("ingrid.caroline.teste@gmail.com", "PROGRAMA TECH DAY CARREFOUR"); 
-
-        foreach (var email in emails)
+        try
         {
-            message.To.Add(new MailAddress(email.Email));
+            var emails = repositoryEmail.ListarEmails();
+
+            this.emailService.EnviarEmail(programa, emails);
+
+            return Ok();
+        } catch {
+            return Ok("Falhou envio de email");
         }
-        message.Subject = "NOVIDADE NO MUNDO DA TI PARA AS MULHERES"; //Assunto
-        message.IsBodyHtml = false;
-        message.Body = "Programa " + programa.Nome + ": " + programa.Tema +"\n" + "\n" + "Descrição: " + programa.Descricao + "\n Site: " + programa.Site;
-
-        smtp.Port = 587;
-        smtp.Host = "smtp.gmail.com";
-        smtp.EnableSsl = true;
-        smtp.UseDefaultCredentials = false;
-        smtp.Credentials = new NetworkCredential("ingrid.caroline.teste@gmail.com", "gdheeoctdoogcqwo");
-        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-        smtp.Send(message);
-
-
-        return Ok();
     }
 
     [HttpPut]

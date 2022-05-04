@@ -2,6 +2,7 @@ using System.Text;
 using CarrefourApi.Repository;
 using CarrefourApi.Repository.SqliteRepository;
 using CarrefourApi.Security;
+using CarrefourApi.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -22,6 +23,8 @@ builder.Services.AddCors(options => {
         config.AllowAnyHeader();
     });
 });
+
+//informando para a aplicação que quero trabalhar com autenticação, autorização e que o formato do Token é o JWT.
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -43,6 +46,7 @@ builder.Services.AddSingleton<TokenService, TokenService>();
 builder.Services.AddSingleton<IInscricaoRepository, SqliteInscricaoRepository>();
 builder.Services.AddSingleton<IUsuarioRepository, SqliteUsuarioRepository>();
 builder.Services.AddSingleton<IProgramaRepository, SqliteProgramaRepository>();
+builder.Services.AddSingleton<EmailService, EmailService>();
 
 var app = builder.Build();
 
@@ -57,6 +61,7 @@ if (app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+//informo que de fato estou usando autenticação e autorização
 app.UseAuthentication();
 app.UseAuthorization();
 
