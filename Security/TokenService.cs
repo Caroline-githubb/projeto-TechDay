@@ -1,4 +1,4 @@
-using System.IdentityModel.Tokens.Jwt; //É a sigla para Json Web Token e pronuncia-se JOT.
+using System.IdentityModel.Tokens.Jwt; 
 // O JWT nada mais é que o armazenamento das informações do token no formato JSON.
 using System.Security.Claims;
 using System.Text;
@@ -15,7 +15,7 @@ namespace CarrefourApi.Security
         public string GenerateToken(string login)
         {
             var tokenHandler = new JwtSecurityTokenHandler(); //cria um objeto que gera um token
-            var key = Encoding.ASCII.GetBytes(Secret);//transforma o scret em um array de bytes
+            var key = Encoding.ASCII.GetBytes(Secret);//transforma o secret em um array de bytes
             var tokenDescriptor = new SecurityTokenDescriptor 
             // token a ser gerado, com os Claims a data de expiração e as credenciais de acesso.
             {
