@@ -1,5 +1,5 @@
-using System.Data.SQLite;
 using CarrefourApi.Model;
+using CarrefourApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarrefourApi.Controllers;
@@ -8,6 +8,13 @@ namespace CarrefourApi.Controllers;
 [Route("[controller]")]
 public class InscricaoController : ControllerBase
 {
+    private IInscricaoRepository repository;
+
+    public InscricaoController(IInscricaoRepository repository)
+    {
+        this.repository = repository;
+    }
+
     [HttpPost]
     [Route("InscricaoEmail")]
     public ActionResult InscricaoEmail(Inscricao inscricao)
@@ -21,20 +28,7 @@ public class InscricaoController : ControllerBase
             return BadRequest("O campo e-mail é obrigatorio");
         }
 
-        using (var connection = new SQLiteConnection("Data Source=bancocarrefour.db"))
-        {
-            connection.Open();
-
-            var command = connection.CreateCommand();
-            command.CommandText =
-            @$"
-                INSERT INTO Inscricao (Nome, Email)
-                VALUES('{inscricao.Nome}', '{inscricao.Email}')
-            ";
-            // command.Parameters.AddWithValue("$id", id);
-
-            command.ExecuteNonQuery();
-        }
+        repository.InserirInscricao(inscricao);
 
         return Ok();
     }

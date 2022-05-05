@@ -25,8 +25,8 @@ function clickEntrar()
     xhttp.open("GET", url, false);
     xhttp.send();//A execução do script pára aqui até a requisição retornar do servidor
 
-    var token = xhttp.responseText;
-    if (token){
+    if (xhttp.status == 200){
+        var token = xhttp.responseText;
         localStorage.setItem("token", token);
         window.location.href = baseUrl + "/cadastroPrograma.html";
     }
