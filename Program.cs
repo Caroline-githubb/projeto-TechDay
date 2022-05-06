@@ -46,7 +46,7 @@ builder.Services.AddSingleton<TokenService, TokenService>();
 builder.Services.AddSingleton<IInscricaoRepository, SqliteInscricaoRepository>();
 builder.Services.AddSingleton<IUsuarioRepository, SqliteUsuarioRepository>();
 builder.Services.AddSingleton<IProgramaRepository, SqliteProgramaRepository>();
-builder.Services.AddSingleton<EmailService, EmailService>();
+builder.Services.AddSingleton<IEmail, EmailService>();
 
 var app = builder.Build();
 

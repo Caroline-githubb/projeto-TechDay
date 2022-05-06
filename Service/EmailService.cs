@@ -4,7 +4,7 @@ using CarrefourApi.Model;
 
 namespace CarrefourApi.Service
 {
-    public class EmailService
+    public class EmailService : IEmail
     {
         
         public void EnviarEmail(Programa programa, List<Inscricao> emails)
