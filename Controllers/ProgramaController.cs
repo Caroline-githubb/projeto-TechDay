@@ -17,9 +17,9 @@ public class ProgramaController : ControllerBase
     private IProgramaRepository repository;
     private IInscricaoRepository repositoryEmail;
 
-    private EmailService emailService;
+    private IEmail emailService;
 
-    public ProgramaController(IProgramaRepository repository, IInscricaoRepository repositoryEmail, EmailService emailService)
+    public ProgramaController(IProgramaRepository repository, IInscricaoRepository repositoryEmail, IEmail emailService)
     {
         this.repository = repository;
         this.repositoryEmail = repositoryEmail;

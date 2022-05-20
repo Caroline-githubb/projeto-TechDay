@@ -5,6 +5,7 @@ using CarrefourApi.Security;
 using CarrefourApi.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using SendGrid.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +17,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors(options => {
-    options.AddDefaultPolicy(config => {
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(config =>
+    {
         config.AllowAnyOrigin();
         config.AllowAnyMethod();
         config.AllowAnyHeader();
@@ -42,11 +45,17 @@ builder.Services.AddAuthentication(x =>
         };
     });
 
+builder.Services.AddSendGrid(options =>
+{
+    options.ApiKey = builder.Configuration
+    .GetSection("SendGridEmailSettings").GetValue<string>("APIKey");
+});
+
 builder.Services.AddSingleton<TokenService, TokenService>();
 builder.Services.AddSingleton<IInscricaoRepository, SqliteInscricaoRepository>();
 builder.Services.AddSingleton<IUsuarioRepository, SqliteUsuarioRepository>();
 builder.Services.AddSingleton<IProgramaRepository, SqliteProgramaRepository>();
-builder.Services.AddSingleton<IEmail, EmailService>();
+builder.Services.AddSingleton<IEmail, SendGridService>();
 
 var app = builder.Build();
 
